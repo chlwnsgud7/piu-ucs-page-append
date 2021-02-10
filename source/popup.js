@@ -19,7 +19,7 @@ async function promise_current_ucs_numbers() {
 }
 
 function custom_add_ucs(ucs_id) {
-    chrome.tabs.excuteScript({
+    chrome.tabs.executeScript({
         code: `$.ajax({
             type: "GET",
             url: "/piu.ucs/ucs.share/ucs.share.ajax.php",
@@ -34,7 +34,7 @@ function custom_add_ucs(ucs_id) {
 }
 
 function custom_delete_ucs(ucs_id) {
-    chrome.tabs.excuteScript({
+    chrome.tabs.executeScript({
         code: `$.ajax({
             type: "GET",
             url: "/piu.ucs/ucs.share/ucs.share.ajax.php",
@@ -49,7 +49,7 @@ function custom_delete_ucs(ucs_id) {
 }
 
 function custom_make_ucs_zip() {
-    chrome.tabs.excuteScript({
+    chrome.tabs.executeScript({
         code: `$.ajax({
             type: "GET",
             url: "/piu.ucs/ucs.share/ucs.share.ajax.php",
