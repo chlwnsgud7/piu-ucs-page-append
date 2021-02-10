@@ -4,14 +4,13 @@
     "version": "0.1",
     "manifest_version": 3,
     "permissions": [
-        "activeTab",
         "http://www.piugame.com/*"
     ],
     "content_scripts": [
         {
-          "matches": ["http://www.piugame.com/*wr_id*"],
-          "js": ["insert.js"],
-          "run_at": "document_end"
+            "matches": ["http://www.piugame.com/*wr_id*"],
+            "js": ["insert.js"],
+            "run_at": "document_end"
         }
     ],
     "browser_action": {
