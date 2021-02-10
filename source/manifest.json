@@ -4,6 +4,7 @@
     "version": "0.1",
     "manifest_version": 3,
     "permissions": [
+        "tabs",
         "http://www.piugame.com/*"
     ],
     "content_scripts": [
