@@ -18,6 +18,9 @@ async function promise_current_ucs_numbers() {
     }
 }
 
+/* IMPORTANT!!!!!!!! */
+/* Add UCS ID != Delete Ucs No. */
+
 function custom_add_ucs(ucs_id) {
     chrome.tabs.executeScript({
         code: `$.ajax({
@@ -65,12 +68,13 @@ function custom_make_ucs_zip() {
 function build_ucs_pack() {
     promise_current_ucs_numbers().then((ucs_numbers) => {
         ucs_numbers.forEach((ucs_id) => { custom_delete_ucs(ucs_id) });
-        Array.from(document.getElementsByClassName("ucs_id_input")).forEach((ucs_id) => { if (ucs_id) custom_add_ucs(ucs_id); });
+        Array.from(document.getElementsByClassName("ucs_id_input")).forEach((input) => { if (input.value) custom_add_ucs(input.value); });
         custom_make_ucs_zip();
     });
 }
 
 function init_document() {
+    chrome.tabs.executeScript(null, { file: "jquery.js" });
     promise_current_ucs_numbers().then((ucs_numbers) => {
         let current_ucs_div = document.getElementById("current-ucs");
         let ucs_id_inputs = Array(10);
