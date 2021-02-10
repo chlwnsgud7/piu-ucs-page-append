@@ -1,6 +1,4 @@
 {
-"update_url": "https://clients2.google.com/service/update2/crx",
-
     "name": "PIU UCS Page Append",
     "description": "A Chrome Extension for Pump It Up Ucs Page",
     "version": "0.1",
