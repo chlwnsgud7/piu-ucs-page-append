@@ -75,24 +75,21 @@ function build_ucs_pack() {
 
 function init_document() {
     chrome.tabs.executeScript(null, { file: "jquery.js" });
-    promise_current_ucs_numbers().then((ucs_numbers) => {
-        let current_ucs_div = document.getElementById("current-ucs");
-        let ucs_id_inputs = Array(10);
+    
+    let current_ucs_div = document.getElementById("current-ucs");
+    let ucs_id_inputs = Array(10);
 
-        for (let i = 0; i < 10; i++) {
-            ucs_id_inputs[i] = document.createElement("input");
-            current_ucs_div.appendChild(ucs_id_inputs[i]);
+    for (let i = 0; i < 10; i++) {
+        ucs_id_inputs[i] = document.createElement("input");
+        current_ucs_div.appendChild(ucs_id_inputs[i]);
 
-            ucs_id_inputs[i].setAttribute("class", "ucs_id_input");
-            ucs_id_inputs[i].setAttribute("type", "number");
-            ucs_id_inputs[i].setAttribute("min", "1");
-            if (i < ucs_numbers.length) ucs_id_inputs[i].setAttribute("value", ucs_numbers[i]);
-        }
-    });
+        ucs_id_inputs[i].setAttribute("class", "ucs_id_input");
+        ucs_id_inputs[i].setAttribute("type", "number");
+        ucs_id_inputs[i].setAttribute("min", "1");
+    }
 
     let ucs_pack_build_button = document.getElementById("build-ucs-pack");
     ucs_pack_build_button.onclick = build_ucs_pack;
 }
-
 
 init_document();
