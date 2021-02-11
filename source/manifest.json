@@ -4,8 +4,10 @@
     "version": "0.1",
     "manifest_version": 3,
     "permissions": [
-        "tabs",
-        "http://www.piugame.com/*"
+        "tabs"
+    ],
+    "host_permissions": [
+        "<all_urls>"
     ],
     "content_scripts": [
         {
@@ -14,7 +16,7 @@
             "run_at": "document_end"
         }
     ],
-    "browser_action": {
+    "action": {
         "default_popup": "popup.html"
     },
     "icons": {

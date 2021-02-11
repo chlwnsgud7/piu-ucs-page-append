@@ -18,9 +18,6 @@ async function promise_current_ucs_numbers() {
     }
 }
 
-/* IMPORTANT!!!!!!!! */
-/* Add UCS ID != Delete Ucs No. */
-
 function custom_add_ucs(ucs_id) {
     chrome.tabs.executeScript({
         code: `$.ajax({
@@ -66,11 +63,15 @@ function custom_make_ucs_zip() {
 }
 
 function build_ucs_pack() {
-    promise_current_ucs_numbers().then((ucs_numbers) => {
-        ucs_numbers.forEach((ucs_id) => { custom_delete_ucs(ucs_id) });
-        Array.from(document.getElementsByClassName("ucs_id_input")).forEach((input) => { if (input.value) custom_add_ucs(input.value); });
-        custom_make_ucs_zip();
-    });
+    if (confirm("UCS 팩을 빌드하시겠습니까? 원래 등록되어있던 UCS는 모두 삭제됩니다.")) {
+        promise_current_ucs_numbers().then((ucs_numbers) => {
+            ucs_numbers.forEach((ucs_id) => { custom_delete_ucs(ucs_id) });
+            Array.from(document.getElementsByClassName("ucs_id_input")).forEach((input) => { if (input.value) custom_add_ucs(input.value); });
+            custom_make_ucs_zip();
+            Array.from(document.getElementsByClassName("ucs_id_input")).forEach((input) => { input.value = ""; });
+            alert("UCS Pack이 등록되었습니다.");
+        });
+    }
 }
 
 function init_document() {
@@ -82,6 +83,7 @@ function init_document() {
     for (let i = 0; i < 10; i++) {
         ucs_id_inputs[i] = document.createElement("input");
         current_ucs_div.appendChild(ucs_id_inputs[i]);
+        current_ucs_div.appendChild( document.createElement("br") );
 
         ucs_id_inputs[i].setAttribute("class", "ucs_id_input");
         ucs_id_inputs[i].setAttribute("type", "number");
