@@ -83,9 +83,9 @@ function init_document() {
     for (let i = 0; i < 10; i++) {
         ucs_id_inputs[i] = document.createElement("input");
         current_ucs_div.appendChild(ucs_id_inputs[i]);
-        current_ucs_div.appendChild( document.createElement("br") );
+        //current_ucs_div.appendChild( document.createElement("br") );
 
-        ucs_id_inputs[i].setAttribute("class", "ucs_id_input");
+        ucs_id_inputs[i].setAttribute("class", "ucs_id_input w3-input");
         ucs_id_inputs[i].setAttribute("type", "number");
         ucs_id_inputs[i].setAttribute("min", "1");
     }
