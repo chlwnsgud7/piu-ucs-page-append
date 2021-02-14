@@ -2,21 +2,23 @@
     "name": "PIU UCS Page Append",
     "description": "A Chrome Extension for Pump It Up Ucs Page",
     "version": "0.1",
+    "manifest_version": 3,
     "permissions": [
-        "activeTab",
-        "http://www.piugame.com/*"
+        "tabs"
+    ],
+    "host_permissions": [
+        "<all_urls>"
     ],
     "content_scripts": [
         {
-          "matches": ["http://www.piugame.com/*wr_id*"],
-          "js": ["insert.js"],
-          "run_at": "document_end"
+            "matches": ["http://www.piugame.com/*wr_id*"],
+            "js": ["insert.js"],
+            "run_at": "document_end"
         }
     ],
-    "browser_action": {
-        "default_title": "PIU UCS Page Append"
+    "action": {
+        "default_popup": "popup.html"
     },
-    "manifest_version": 3,
     "icons": {
         "16": "icon_16.png"
     }
