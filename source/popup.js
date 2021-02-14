@@ -14,7 +14,36 @@ async function promise_current_ucs_numbers() {
 
         return ucs_numbers;
     } catch (err) {
-        console.warn('An Error Occured.', err);
+        console.warn('An error occured in async function: promise_current_ucs_numbers()', err);
+    }
+}
+
+async function promise_ucs_info(ucs_id) {
+    try {
+        const response = await fetch(`http://www.piugame.com/bbs/board.php?bo_table=ucs&wr_id=${ucs_id}`);
+        const html = await response.text();
+
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(html, 'text/html');
+        let ucs_info = new Object();
+
+        let table_step_info = doc.getElementsByClassName("step_info")[0];
+        let table_step_info_td = table_step_info.getElementsByTagName("td");
+
+        ucs_info['song_title'] = doc.getElementsByClassName('song_title')[0].innerText;
+        ucs_info['song_artist'] = doc.getElementsByClassName('song_artist')[0].innerText;
+        ucs_info['song_artist'] = ucs_info['song_artist'].substring(1, ucs_info['song_artist'].length-1);
+
+        ucs_info['stepmaker'] = table_step_info_td[0].innerText.trim();
+        ucs_info['step_id'] = table_step_info_td[1].innerText;
+        ucs_info['upload'] = table_step_info_td[2].innerText;
+        ucs_info['step_mode'] = table_step_info_td[3].innerText;
+        ucs_info['players'] = table_step_info_td[4].innerText;
+        ucs_info['step_level'] = table_step_info_td[6].innerText;
+
+        return ucs_info;
+    } catch (err) {
+        console.warn('An error occured in async function: promise_ucs_info()', err);
     }
 }
 
@@ -66,9 +95,8 @@ function build_ucs_pack() {
     if (confirm("UCS 팩을 빌드하시겠습니까? 원래 등록되어있던 UCS는 모두 삭제됩니다.")) {
         promise_current_ucs_numbers().then((ucs_numbers) => {
             ucs_numbers.forEach((ucs_id) => { custom_delete_ucs(ucs_id) });
-            Array.from(document.getElementsByClassName("ucs_id_input")).forEach((input) => { if (input.value) custom_add_ucs(input.value); });
+            Array.from(document.getElementsByClassName("ucs-id-input")).forEach((input) => { if (input.value) custom_add_ucs(input.value); });
             custom_make_ucs_zip();
-            Array.from(document.getElementsByClassName("ucs_id_input")).forEach((input) => { input.value = ""; });
             alert("UCS Pack이 등록되었습니다.");
         });
     }
@@ -77,17 +105,22 @@ function build_ucs_pack() {
 function init_document() {
     chrome.tabs.executeScript(null, { file: "jquery.js" });
     
-    let current_ucs_div = document.getElementById("current-ucs");
-    let ucs_id_inputs = Array(10);
-
+    let ucs_input_list = document.getElementById("ucs-input-list");
+    
     for (let i = 0; i < 10; i++) {
-        ucs_id_inputs[i] = document.createElement("input");
-        current_ucs_div.appendChild(ucs_id_inputs[i]);
-        //current_ucs_div.appendChild( document.createElement("br") );
+        let ucs_input_list_item = document.createElement("li");
+        ucs_input_list.appendChild(ucs_input_list_item);
 
-        ucs_id_inputs[i].setAttribute("class", "ucs_id_input w3-input");
-        ucs_id_inputs[i].setAttribute("type", "number");
-        ucs_id_inputs[i].setAttribute("min", "1");
+        let ucs_id_input = document.createElement("input");
+        ucs_input_list_item.appendChild(ucs_id_input);
+
+        ucs_id_input.setAttribute("class", "ucs-id-input w3-input w3-padding-small");
+        ucs_id_input.setAttribute("type", "number");
+        ucs_id_input.setAttribute("min", "1");
+
+        ucs_id_input.oninput = (ev) => {
+
+        }
     }
 
     let ucs_pack_build_button = document.getElementById("build-ucs-pack");
